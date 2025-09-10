@@ -19,7 +19,7 @@ pipeline {
 		stage('Deploy into tomcat') {
             steps {
                 echo 'Deploying using tocat webserver'
-				deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'tomcat', path: '', url: 'http://ec2-98-82-2-186.compute-1.amazonaws.com:8080/')], contextPath: 'instagram16', onFailure: false, war: '**/*.war'
+				deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'tomcat', path: '', url: 'http://ec2-98-82-2-186.compute-1.amazonaws.com:8080/')], contextPath: 'favdrfjj', onFailure: false, war: '**/*.war'
             }
         }
     }
