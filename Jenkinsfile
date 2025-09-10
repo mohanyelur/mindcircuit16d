@@ -1,29 +1,26 @@
 pipeline {
-
     agent any
+
     stages {
-	
-        stage('CLONE SCM') {
+        stage('Git clone') {
             steps {
-                echo 'This stage clones SC from GIT repo'				
-				git branch: 'main', url: 'https://github.com/devopstraininghub/mindcircuit16d.git'
+                echo 'cloning code from github'
+				git branch: 'main', url: 'https://github.com/mohanyelur/mindcircuit16d.git'
             }
         }
 		
-        stage('Build Artifact') {
+		stage('Maven build') {
             steps {
-                echo 'This stage builds the code using maven'
-				sh 'mvn clean install'			
-				
+                echo 'Build using the maven'
+				sh 'mvn clean install'
             }
         }
 		
-        stage('Deploy to Tomcat') {
+		stage('Deploy into tomcat') {
             steps {
-                echo 'This stage deploys .war to tomcat webserver'
-                deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'tomcat', path: '', url: 'http://44.223.26.72:8090/')], contextPath: 'MC-APP', war: '**/*.war'
+                echo 'Deploying using tocat webserver'
+				deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'tomcat', path: '', url: 'http://ec2-98-82-2-186.compute-1.amazonaws.com:8080/')], contextPath: 'instagram16', onFailure: false, war: '**/*.war'
             }
-        }		
-		
+        }
     }
 }
