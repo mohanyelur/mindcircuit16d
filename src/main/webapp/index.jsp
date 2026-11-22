@@ -1,1 +1,1 @@
-This is customized app updated new deployed.
+Hi, This is customized app updated new deployed.
