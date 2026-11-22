@@ -1,1 +1,1 @@
-This is customized app
+This is customized app updated.
