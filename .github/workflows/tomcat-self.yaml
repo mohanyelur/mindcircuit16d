@@ -1,4 +1,4 @@
-name: Deploy to Tomcat via Manager AP
+name: Deploy to Tomcat via Manager API
 
 on:
   push:
@@ -31,4 +31,4 @@ jobs:
               APP_NAME=Webapp
               curl -u "${{ secrets.TOMCAT_USERNAME }}:${{ secrets.TOMCAT_PASSWORD }}" \
                 --upload-file "$WAR_FILE" \
-                "http://${{ secrets.TOMCATHOST }}:8080/manager/text/deploy?path=/$APP_NAME&update=true"
+                "http://${{ secrets.TOMCAT_HOST }}:8080/manager/text/deploy?path=/$APP_NAME&update=true"
