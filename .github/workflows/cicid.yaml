@@ -29,6 +29,6 @@ jobs:
         run: |
               WAR_FILE=$(ls target/*.war | head -n 1)
               APP_NAME=madhuapp
-              curl -u "${{ secrets.TOMCAT_USERNAME }}:${{ secrets.TOMCAT_PASSWORD }}" \
+              curl -u "tomcat:tomcat" \
                 --upload-file "$WAR_FILE" \
                 "http://107.23.117.238:8080/manager/text/deploy?path=/$APP_NAME&update=true"
