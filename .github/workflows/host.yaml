@@ -1,3 +1,4 @@
+
 name: Deploy to Tomcat via Manager API
 
 on:
@@ -9,26 +10,33 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    #runs-on: self-hosted
+    # Change to self-hosted when using your EC2 runner
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-        
+        uses: actions/checkout@v4
 
       - name: Set up JDK
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
-        distribution: 'temurin' 
-        java-version: '11'
+          distribution: 'temurin'
+          java-version: '11'
 
       - name: Build WAR using Maven
-       # run: mvn clean package
-         run: mvn clean package -DskipTests
+        run: mvn clean package -DskipTests
 
       - name: Deploy WAR to Tomcat
         run: |
-              WAR_FILE=$(ls target/*.war | head -n 1)
-              APP_NAME=Webapp-host
-              curl -u "${{ secrets.TOMCAT_USERNAME }}:${{ secrets.TOMCAT_PASSWORD }}" \
-                --upload-file "$WAR_FILE" \
-                "http://${{ secrets.TOMCAT_HOST }}:8080/manager/text/deploy?path=/$APP_NAME&update=true"
+          WAR_FILE=$(find target -maxdepth 1 -name '*.war' -print -quit)
+
+          if [ -z "$WAR_FILE" ]; then
+            echo "WAR file not found"
+            exit 1
+          fi
+
+          APP_NAME=Webapp-host
+
+          curl --fail-with-body -sS \
+            -u "${{ secrets.TOMCAT_USERNAME }}:${{ secrets.TOMCAT_PASSWORD }}" \
+            --upload-file "$WAR_FILE" \
+            "http://${{ secrets.TOMCAT_HOST }}:8080/manager/text/deploy?path=/$APP_NAME&update=true"
