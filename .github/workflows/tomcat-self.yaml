@@ -1,4 +1,4 @@
-name: Deploy to Tomcat via Manager API
+name: Deploy to Tomcat via Manager AP
 
 on:
   push:
