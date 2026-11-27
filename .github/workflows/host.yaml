@@ -4,7 +4,7 @@ name: Deploy to Tomcat via Manager API
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
